@@ -59,11 +59,11 @@ public:
   }
 
   bool linhaBranca(int leituraSensor) {
-    return leituraSensor <= chao;
+    return leituraSensor >= chao;
   }
 
   bool inimigoAFrente(int leituraSensor) {
-    return leituraSensor >= distancia;
+    return leituraSensor <= distancia;
   }
 
   void girarOn(int motorFrente, int motorTras) {
@@ -100,16 +100,16 @@ public:
         analogWrite(motorDireitoFrente, delay1);
         analogWrite(motorEsquerdoTras, delay1);
 
-        firstTime = true;
+        firstTime = false;
       } else {
         if (firstTime) {
           girarOff(motorDireitoFrente, motorEsquerdoTras);
           girarOn(motorDireitoTras, motorEsquerdoFrente);
-          delay(delay2);
+          delay(500);
           girarOff(motorDireitoTras, motorEsquerdoFrente);
         }
         
-        firstTime = false;
+        firstTime = true;
         
         motorOn(motorDireitoFrente);
         motorOn(motorEsquerdoFrente);
@@ -120,7 +120,7 @@ public:
       girarOff(motorDireitoFrente, motorEsquerdoTras);
       motorOn(motorDireitoTras);
       motorOn(motorEsquerdoTras);
-      delay(delay3);
+      //delay(delay3);
     }
   }
 };
@@ -132,14 +132,14 @@ const int pinMotorDireitoFrente = 5;
 const int pinMotorDireitoTras = 4;
 const int pinMotorDireitoDefine = 3;
 const int pinMotorEsquerdoDefine = 6;
-const int pinSensorFrente = A4;
+const int pinSensorFrente = A5;
 const int pinSensorDireito = A0;
 const int pinSensorEsquerdo = A2;
 
 
 Robot robot(pinMotorEsquerdoTras, pinMotorEsquerdoFrente, pinMotorDireitoFrente, pinMotorDireitoTras,
             pinMotorDireitoDefine, pinMotorEsquerdoDefine, pinSensorFrente, pinSensorDireito, pinSensorEsquerdo,
-            100, 30);
+            50, 30);
 
 void setup() {
   Serial.begin(9600);
